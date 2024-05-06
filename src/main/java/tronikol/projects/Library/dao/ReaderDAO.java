@@ -21,4 +21,10 @@ public class ReaderDAO {
     public List<Reader> index() {
         return jdbcTemplate.query("Select * from reader", new BeanPropertyRowMapper<>(Reader.class));
     }
+
+
+    public void safe(Reader reader) {
+        jdbcTemplate.update("INSERT INTO reader(fullname, burthyear) values (?, ?)",
+                reader.getFullName(), reader.getBurthYear());
+    }
 }

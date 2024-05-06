@@ -1,11 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Добавление читателя</title>
 </head>
 <body>
-New reader!
+<h3>Введите данные читателя:</h3>
+<form th:method="POST" th:action="@{/readers/new}" th:object="${reader}">
+    <label for="fullName">Введите фио пользователя: </label>
+    <input type = "text" th:field="*{fullName}" id="fullName">
+    <br/>
+    <label for="burthYear">Введите год рождения пользователя: </label>
+    <input type = "text" th:field="*{burthYear}" id="burthYear">
+    <br/>
+    <input type="submit" value="Create!"/>
+
+</form>
 
 </body>
 </html>
