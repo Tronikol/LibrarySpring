@@ -6,7 +6,7 @@
 </head>
 <body>
 <h3>Введите данные читателя:</h3>
-<form th:method="POST" th:action="@{/readers/new}" th:object="${reader}">
+<form th:method="POST" th:action="@{/readers}" th:object="${reader}">
     <label for="fullName">Введите фио пользователя: </label>
     <input type = "text" th:field="*{fullName}" id="fullName">
     <br/>

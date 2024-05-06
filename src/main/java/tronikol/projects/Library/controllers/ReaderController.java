@@ -34,7 +34,9 @@ public class ReaderController {
     }
 
     // Метод добавления нового пользователя
-    @PostMapping("/new")
+    // Тут указано что @ModelAttribute можно и опускать
+    // https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/arguments.html
+    @PostMapping()
     public String createReader(@ModelAttribute("reader") Reader reader) {
         readerDAO.safe(reader);
         return "redirect:/readers";
