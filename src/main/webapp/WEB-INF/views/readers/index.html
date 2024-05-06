@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Все читатели</title>
+</head>
+<body>
+<h1>Все читатели:</h1>
+
+<div th:each="reader : ${readers}">
+    <a th:text="${reader.getFullName()} + ' Год рождения:' + ${reader.getBurthYear()}">user</a>
+</div>
+<br/>
+<hr/>
+
+<a href="/readers/new">Добавить читателя</a>
+
+</body>
+</html>
