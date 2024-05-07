@@ -28,4 +28,8 @@ public class BookDAO {
                 null, book.getTitle(), book.getAuthor(), book.getYear());
     }
 
+    public Book get(int id) {
+        return jdbcTemplate.query("Select * from book where id = ?", new BookMapper(),
+                id).stream().findAny().orElse(null);
+    }
 }

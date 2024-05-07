@@ -27,4 +27,9 @@ public class ReaderDAO {
         jdbcTemplate.update("INSERT INTO reader(fullname, burthyear) values (?, ?)",
                 reader.getFullName(), reader.getBurthYear());
     }
+
+    public Reader get(int id) {
+        return jdbcTemplate.query("Select * from reader where id = ?",
+                new BeanPropertyRowMapper<>(Reader.class), id).stream().findAny().orElse(null);
+    }
 }

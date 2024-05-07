@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Читатель</title>
+</head>
+<body>
+<H2>Информация о читателе:</H2>
+<br/>
+<a th:text="'Имя: ' + ${reader.getFullName()}">name</a>
+<br/>
+<a th:text="'Год рождения: ' + ${reader.getBurthYear()}">burthYear</a>
+</body>
+</html>
