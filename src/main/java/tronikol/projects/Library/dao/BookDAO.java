@@ -23,4 +23,9 @@ public class BookDAO {
         return jdbcTemplate.query("Select * from book", new BookMapper());
     }
 
+    public void add(Book book) {
+        jdbcTemplate.update("Insert into book(person_id, title, author, year) values (?, ?, ?, ?)",
+                null, book.getTitle(), book.getAuthor(), book.getYear());
+    }
+
 }
