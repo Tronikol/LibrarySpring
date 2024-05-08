@@ -1,8 +1,10 @@
 package tronikol.projects.Library.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,17 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import tronikol.projects.Library.dao.BookDAO;
 import tronikol.projects.Library.dao.ReaderDAO;
 import tronikol.projects.Library.models.Book;
+import tronikol.projects.Library.util.BookValidator;
 
 @Controller
 @RequestMapping("/books")
 public class BookController {
     private final BookDAO bookDAO;
     private final ReaderDAO readerDAO;
+    private final BookValidator bookValidator;
 
     @Autowired
-    public BookController(BookDAO bookDAO, ReaderDAO readerDAO) {
+    public BookController(BookDAO bookDAO, ReaderDAO readerDAO, BookValidator bookValidator) {
         this.bookDAO = bookDAO;
         this.readerDAO = readerDAO;
+        this.bookValidator = bookValidator;
     }
 
     @GetMapping()
@@ -37,7 +42,11 @@ public class BookController {
     }
 
     @PostMapping()
-    public String addBook(Book book) {
+    public String create(@Valid Book book, BindingResult bindingResult) {
+        bookValidator.validate(book, bindingResult);
+        if(bindingResult.hasErrors()){
+            return "books/new";
+        }
         bookDAO.add(book);
         return "redirect:/books";
     }

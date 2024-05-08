@@ -1,11 +1,18 @@
 package tronikol.projects.Library.models;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 public class Book {
     private int id;
+    @Size(min=3, message = "Название должно быть больше 3 знаков")
     private String title;
+    @NotEmpty(message="Поле автора не должно быть пустым")
+    @Pattern(regexp="[А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+", message = "Имя автора должно быть в формате: Фамилия Имя Отчество")
     private String author;
-    private int personId;
     private int year;
+    private int personId;
 
     public Book(int id, String title, String author, int personId, int year) {
         this.id = id;

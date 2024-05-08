@@ -41,4 +41,9 @@ public class BookDAO {
         return jdbcTemplate.query("Select * from book where person_id = ?",
                 new BookMapper(), id);
     }
+
+    public Book get(String title) {
+        return jdbcTemplate.query("Select * from book where title = ?",
+                new BookMapper(), title).stream().findAny().orElse(null);
+    }
 }
