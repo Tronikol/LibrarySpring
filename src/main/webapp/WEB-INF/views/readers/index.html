@@ -8,9 +8,11 @@
 <h1>Все читатели:</h1>
 
 <div th:each="reader : ${readers}">
-    <a th:text="${reader.getFullName()} + ' Год рождения:' + ${reader.getBurthYear()}">user</a>
+    <a th:text="'Имя: ' + ${reader.getFullName()} + ' Год рождения:' +
+    ${reader.getBurthYear()}" th:href="@{/readers/{id}(id=${reader.getId()})}">user</a>
+    <br/>
 </div>
-<br/>
+
 <hr/>
 
 <a href="/readers/new">Добавить читателя</a>
