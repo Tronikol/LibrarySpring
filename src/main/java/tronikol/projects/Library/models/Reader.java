@@ -1,9 +1,18 @@
 package tronikol.projects.Library.models;
 
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 public class Reader {
     private int id;
+    @NotEmpty(message = "Имя не должно быть пустым")
+    @Size(min=3, max=40, message = "Имя должно быть от 3 до 40 знаков")
+    @Pattern(regexp="[А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+", message = "Имя должно быть в формате: Фамилия Имя Отчество")
     private String fullName;
+    @Min(value = 1900, message = "Читатель родился позже 1900 года")
     private int burthYear;
 
     public int getId() {

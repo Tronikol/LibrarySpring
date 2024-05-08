@@ -8,16 +8,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import tronikol.projects.Library.dao.BookDAO;
+import tronikol.projects.Library.dao.ReaderDAO;
 import tronikol.projects.Library.models.Book;
 
 @Controller
 @RequestMapping("/books")
 public class BookController {
     private final BookDAO bookDAO;
+    private final ReaderDAO readerDAO;
 
     @Autowired
-    public BookController(BookDAO bookDAO) {
+    public BookController(BookDAO bookDAO, ReaderDAO readerDAO) {
         this.bookDAO = bookDAO;
+        this.readerDAO = readerDAO;
     }
 
     @GetMapping()
@@ -39,10 +42,10 @@ public class BookController {
         return "redirect:/books";
     }
 
-    // Страница с информацией о книге
+    // Страница с информацией о книге, также о пользователе который ее взял
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("book", bookDAO.get(id));
+        model.addAttribute("bookWithReader", bookDAO.getWithReader(id));
         return "books/show";
     }
 

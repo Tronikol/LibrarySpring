@@ -10,5 +10,18 @@
 <a th:text="'Имя: ' + ${reader.getFullName()}">name</a>
 <br/>
 <a th:text="'Год рождения: ' + ${reader.getBurthYear()}">burthYear</a>
+<br/>
+<a th:if="${books.isEmpty()}">У читателя сейчас нет книг</a>
+<br/>
+<a th:unless="${books.isEmpty()}">
+    <a>Книги читателя: </a>
+    <br/>
+    <a th:each="book : ${books}">
+        <a th:text="'Название: ' + ${book.getTitle()}">title</a>
+        <a th:text="' Автор: ' + ${book.getAuthor()}">author</a>
+        <a th:text="' Год печати: ' + ${book.getYear()}">year</a>
+        <br/>
+    </a>
+</a>
 </body>
 </html>

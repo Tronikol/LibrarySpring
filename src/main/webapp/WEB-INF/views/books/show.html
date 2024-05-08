@@ -7,10 +7,14 @@
 <body>
 <h2>Данные о книге:</h2>
 <br/>
-<a th:text="'Название книги: ' + ${book.getTitle()}">title</a>
+<a th:text="'Название книги: ' + ${bookWithReader.getTitle()}">title</a>
 <br/>
-<a th:text="'Автор: ' + ${book.getAuthor()}">author</a>
+<a th:text="'Автор: ' + ${bookWithReader.getAuthor()}">author</a>
 <br/>
-<a th:text="'Год печати: ' + ${book.getYear()}">year</a>
+<a th:text="'Год печати: ' + ${bookWithReader.getYear()}">year</a>
+<br/>
+<a th:unless="${bookWithReader.getFullName() == null}" th:text="'Читатель: ' +
+${bookWithReader.getFullName()}">reader</a>
+<a th:if="${bookWithReader.getFullName()==null}">Книга сейчас свободна</a>
 </body>
 </html>

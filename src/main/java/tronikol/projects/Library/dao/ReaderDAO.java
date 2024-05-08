@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import tronikol.projects.Library.dto.ReaderBooksDTO;
 import tronikol.projects.Library.models.Reader;
 
 import java.util.List;
@@ -32,4 +33,10 @@ public class ReaderDAO {
         return jdbcTemplate.query("Select * from reader where id = ?",
                 new BeanPropertyRowMapper<>(Reader.class), id).stream().findAny().orElse(null);
     }
+    public Reader get(String fullName){
+        return jdbcTemplate.query("Select * from reader where fullname = ?",
+                new BeanPropertyRowMapper<>(Reader.class), fullName).stream().findAny().orElse(null);
+
+    }
+
 }
