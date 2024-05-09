@@ -39,4 +39,8 @@ public class ReaderDAO {
 
     }
 
+    public void update(int id, Reader reader) {
+        jdbcTemplate.update("UPDATE reader set fullname = ?, burthyear = ? where id = ?",
+                reader.getFullName(), reader.getBurthYear(), id);
+    }
 }

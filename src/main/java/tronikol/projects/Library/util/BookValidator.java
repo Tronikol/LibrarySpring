@@ -24,7 +24,8 @@ public class BookValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Book book = (Book) target;
-        if(bookDao.get(book.getTitle())!=null) {
+        // Strange equals correct this
+        if(bookDao.get(book.getTitle())!=null && bookDao.get(book.getTitle()).getId()!=((Book) target).getId()) {
             errors.rejectValue("title", "", "Такая книга уже зарегистрирована");
         }
 

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Изменение читателя</title>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/readers/{id}(id=${reader.getId()})}" th:object="${reader}">
+    <label for="fullName">Enter name: </label>
+    <input type="text" th:field="*{fullName}" id="fullName"/>
+    <div style="color:red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">name error</div>
+    <br/>
+    <label for="burthYear">Enter age: </label>
+    <input type="text" th:field="*{burthYear}" id="burthYear"/>
+    <div style="color:red" th:if="${#fields.hasErrors('burthYear')}" th:errors="*{burthYear}">author error</div>
+    <br/>
+    <input type="submit" value="Update!"/>
+</form>
+</body>
+</html>

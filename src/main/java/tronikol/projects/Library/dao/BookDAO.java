@@ -25,8 +25,8 @@ public class BookDAO {
     }
 
     public void add(Book book) {
-        jdbcTemplate.update("Insert into book(person_id, title, author, year) values (?, ?, ?, ?)",
-                null, book.getTitle(), book.getAuthor(), book.getYear());
+        jdbcTemplate.update("Insert into book(title, author, year) values (?, ?, ?)",
+                book.getTitle(), book.getAuthor(), book.getYear());
     }
 
     public Book get(int id) {
@@ -45,5 +45,10 @@ public class BookDAO {
     public Book get(String title) {
         return jdbcTemplate.query("Select * from book where title = ?",
                 new BookMapper(), title).stream().findAny().orElse(null);
+    }
+
+    public void update(int id, Book book) {
+        jdbcTemplate.update("UPDATE book set title=?, author=?, year=? where id = ?",
+                book.getTitle(), book.getAuthor(), book.getYear(), id);
     }
 }

@@ -10,6 +10,7 @@ public class BookReaderDtoRowMapper implements RowMapper<BookReaderDTO> {
     @Override
     public BookReaderDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
         BookReaderDTO bookReaderDTO = new BookReaderDTO();
+        bookReaderDTO.setId(rs.getInt("id"));
         bookReaderDTO.setAuthor(rs.getString("author"));
         bookReaderDTO.setTitle(rs.getString("title"));
         bookReaderDTO.setYear(rs.getInt("year"));

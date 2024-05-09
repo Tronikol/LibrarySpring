@@ -13,8 +13,12 @@
 <br/>
 <a th:text="'Год печати: ' + ${bookWithReader.getYear()}">year</a>
 <br/>
+<a th:href="@{/books/{id}/edit(id=${bookWithReader.getId()})}">Редактировать данные книги</a>
+<br/>
+
 <a th:unless="${bookWithReader.getFullName() == null}" th:text="'Читатель: ' +
 ${bookWithReader.getFullName()}">reader</a>
 <a th:if="${bookWithReader.getFullName()==null}">Книга сейчас свободна</a>
+
 </body>
 </html>

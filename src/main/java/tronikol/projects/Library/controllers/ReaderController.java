@@ -60,6 +60,24 @@ public class ReaderController {
         model.addAttribute("books", bookDAO.getByPersonId(id));
         return "readers/show";
     }
+    // Страница редактирования
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable("id") int id, Model model){
+        model.addAttribute("reader", readerDAO.get(id));
+        return "readers/edit";
+    }
+    //  Изменение читателя
+    @PatchMapping("/{id}")
+    public String update(@PathVariable("id") int id, @ModelAttribute("reader") @Valid Reader reader,
+                         BindingResult bindingResult){
+        readerValidator.validate(reader, bindingResult);
+        if(bindingResult.hasErrors()) {
+            return "readers/edit";
+        }
+        readerDAO.update(id, reader);
+        return "redirect:/readers";
+
+    }
 
 
 }

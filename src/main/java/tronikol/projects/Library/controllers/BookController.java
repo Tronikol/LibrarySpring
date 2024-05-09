@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import tronikol.projects.Library.dao.BookDAO;
 import tronikol.projects.Library.dao.ReaderDAO;
 import tronikol.projects.Library.models.Book;
@@ -56,6 +53,25 @@ public class BookController {
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("bookWithReader", bookDAO.getWithReader(id));
         return "books/show";
+    }
+
+    // Страница изменения книги
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable("id") int id, Model model){
+        model.addAttribute("book", bookDAO.get(id));
+        return "books/edit";
+    }
+    // Изменение книги
+    @PatchMapping("/{id}")
+    public String update(@PathVariable("id") int id, @ModelAttribute("book") @Valid Book book,
+                         BindingResult bindingResult){
+        bookValidator.validate(book, bindingResult);
+        if(bindingResult.hasErrors()){
+            return "books/edit";
+        }
+        bookDAO.update(id, book);
+        return "redirect:/books";
+
     }
 
 }

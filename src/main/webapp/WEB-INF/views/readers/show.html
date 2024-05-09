@@ -13,6 +13,8 @@
 <br/>
 <a th:if="${books.isEmpty()}">У читателя сейчас нет книг</a>
 <br/>
+<a th:href="@{/readers/{id}/edit(id=${reader.getId()})}">Редактировать данные читателя</a>
+<br/>
 <a th:unless="${books.isEmpty()}">
     <a>Книги читателя: </a>
     <br/>

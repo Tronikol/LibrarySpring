@@ -2,6 +2,7 @@ package tronikol.projects.Library.dto;
 
 public class BookReaderDTO {
     // Book data:
+    private int id;
     private String title;
     private String author;
     private int year;
@@ -10,7 +11,8 @@ public class BookReaderDTO {
     private String fullName;
     private int burthYear;
 
-    public BookReaderDTO(String title, String author, int personId, int year, String fullName, int burthYear) {
+    public BookReaderDTO(int id, String title, String author, int personId, int year, String fullName, int burthYear) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.personId = personId;
@@ -67,5 +69,13 @@ public class BookReaderDTO {
 
     public void setBurthYear(int burthYear) {
         this.burthYear = burthYear;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

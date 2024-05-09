@@ -22,7 +22,8 @@ public class ReaderValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Reader reader = (Reader) target;
-        if(readerDAO.get(reader.getFullName())!=null) {
+        // maybe i can correct this?
+        if(readerDAO.get(reader.getFullName())!=null && readerDAO.get(reader.getFullName()).getId()!=((Reader) target).getId()) {
             errors.rejectValue("fullName", "", "Пользователь с таким именем уже существует");
         }
     }
