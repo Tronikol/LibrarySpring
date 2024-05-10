@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import tronikol.projects.Library.dto.BookReaderDTO;
 import tronikol.projects.Library.models.Book;
+import tronikol.projects.Library.models.Reader;
 
 import java.util.List;
 
@@ -48,7 +49,16 @@ public class BookDAO {
     }
 
     public void update(int id, Book book) {
-        jdbcTemplate.update("UPDATE book set title=?, author=?, year=? where id = ?",
-                book.getTitle(), book.getAuthor(), book.getYear(), id);
+        jdbcTemplate.update("UPDATE book set title=?, author=?, year=?, person_id=? where id = ?",
+                book.getTitle(), book.getAuthor(), book.getYear(), book.getPersonId(), id);
+    }
+
+    public void give(int id, Reader reader) {
+        jdbcTemplate.update("UPDATE book set person_id=? where id = ?",
+        reader.getId(), id);
+    }
+
+    public void free(int id) {
+        jdbcTemplate.update("UPDATE  book set person_id=null where id = ?", id);
     }
 }

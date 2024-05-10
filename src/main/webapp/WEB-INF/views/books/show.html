@@ -18,7 +18,22 @@
 
 <a th:unless="${bookWithReader.getFullName() == null}" th:text="'Читатель: ' +
 ${bookWithReader.getFullName()}">reader</a>
-<a th:if="${bookWithReader.getFullName()==null}">Книга сейчас свободна</a>
+<br/>
+<form th:method="PATCH" th:action="@{/books/{id}/free(id=${bookWithReader.getId()})}">
+    <input type="submit" value="Освободить книгу"/>
+</form>
+<a th:if="${bookWithReader.getFullName()==null}">
+    <a>Книга сейчас свободна</a>
+    <br/>
+    <a>Выдать пользователю:</a>
+    <form th:method="PATCH" th:action="@{/books/{id}/give(id=${bookWithReader.getId()})}" th:object="${bookWithReader}">
+        <select th:field="*{fullName}">
+            <option th:each="reader : ${readers}" th:value="${reader.fullName}" th:text="${reader.fullName}">
+            </option>
+        </select>
+        <input type="submit" value="Выдать книгу"/>
+    </form>
+</a>
 
 </body>
 </html>

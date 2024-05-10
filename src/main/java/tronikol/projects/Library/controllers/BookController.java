@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import tronikol.projects.Library.dao.BookDAO;
 import tronikol.projects.Library.dao.ReaderDAO;
+import tronikol.projects.Library.dto.BookReaderDTO;
 import tronikol.projects.Library.models.Book;
 import tronikol.projects.Library.util.BookValidator;
 
@@ -52,6 +53,8 @@ public class BookController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("bookWithReader", bookDAO.getWithReader(id));
+        // В модель помещается список всех пользователей, для выдачи в списке
+        model.addAttribute("readers", readerDAO.index());
         return "books/show";
     }
 
@@ -71,7 +74,18 @@ public class BookController {
         }
         bookDAO.update(id, book);
         return "redirect:/books";
-
     }
+    // Выдача книги читателю
+    @PatchMapping("{id}/give")
+    public String give(@PathVariable("id") int id, @ModelAttribute("bookWithReader") BookReaderDTO bookWithReader) {
+        bookDAO.give(id, readerDAO.get(bookWithReader.getFullName()));
+        return "redirect:/books";
+    }
+    @PatchMapping("{id}/free")
+    public String free(@PathVariable("id") int id) {
+        bookDAO.free(id);
+        return "redirect:/books";
+    }
+
 
 }
