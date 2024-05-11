@@ -12,13 +12,11 @@ public class Book {
     @Pattern(regexp="[А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+", message = "Имя автора должно быть в формате: Фамилия Имя Отчество")
     private String author;
     private int year;
-    private int personId;
 
     public Book(int id, String title, String author, int personId, int year) {
         this.id = id;
         this.title = title;
         this.author = author;
-        this.personId = personId;
         this.year = year;
     }
 
@@ -33,15 +31,7 @@ public class Book {
 
 
     public Book() {}
-
-
-    public int getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(int personId) {
-        this.personId = personId;
-    }
+    
 
     public String getTitle() {
         return title;

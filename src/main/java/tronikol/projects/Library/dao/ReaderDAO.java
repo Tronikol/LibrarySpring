@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import tronikol.projects.Library.dto.ReaderBooksDTO;
+
 import tronikol.projects.Library.models.Reader;
 
 import java.util.List;
@@ -42,5 +42,9 @@ public class ReaderDAO {
     public void update(int id, Reader reader) {
         jdbcTemplate.update("UPDATE reader set fullname = ?, burthyear = ? where id = ?",
                 reader.getFullName(), reader.getBurthYear(), id);
+    }
+
+    public void delete(int id) {
+        jdbcTemplate.update("DELETE FROM reader where id = ?", id);
     }
 }

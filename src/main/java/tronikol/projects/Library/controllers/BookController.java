@@ -8,8 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import tronikol.projects.Library.dao.BookDAO;
 import tronikol.projects.Library.dao.ReaderDAO;
-import tronikol.projects.Library.dto.BookReaderDTO;
 import tronikol.projects.Library.models.Book;
+import tronikol.projects.Library.models.Reader;
 import tronikol.projects.Library.util.BookValidator;
 
 @Controller
@@ -51,8 +51,9 @@ public class BookController {
 
     // Страница с информацией о книге, также о пользователе который ее взял
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("bookWithReader", bookDAO.getWithReader(id));
+    public String show(@PathVariable("id") int id, Model model, @ModelAttribute("reader") Reader reader) {
+        model.addAttribute("book", bookDAO.get(id));
+        model.addAttribute("owner", bookDAO.getBookOwner(id));
         // В модель помещается список всех пользователей, для выдачи в списке
         model.addAttribute("readers", readerDAO.index());
         return "books/show";
@@ -73,17 +74,24 @@ public class BookController {
             return "books/edit";
         }
         bookDAO.update(id, book);
-        return "redirect:/books";
+        return "redirect:/books/"+id;
     }
     // Выдача книги читателю
     @PatchMapping("{id}/give")
-    public String give(@PathVariable("id") int id, @ModelAttribute("bookWithReader") BookReaderDTO bookWithReader) {
-        bookDAO.give(id, readerDAO.get(bookWithReader.getFullName()));
-        return "redirect:/books";
+    public String give(@PathVariable("id") int id, @ModelAttribute("reader") Reader reader) {
+        bookDAO.give(id, reader);
+        return "redirect:/books/" + id;
     }
+    // Возврат книги в библиотеку
     @PatchMapping("{id}/free")
     public String free(@PathVariable("id") int id) {
         bookDAO.free(id);
+        return "redirect:/books/" + id;
+    }
+    // Удаление книги
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id){
+        bookDAO.delete(id);
         return "redirect:/books";
     }
 

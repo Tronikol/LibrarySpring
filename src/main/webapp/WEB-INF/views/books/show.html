@@ -7,31 +7,40 @@
 <body>
 <h2>Данные о книге:</h2>
 <br/>
-<a th:text="'Название книги: ' + ${bookWithReader.getTitle()}">title</a>
+<a th:text="'Название книги: ' + ${book.getTitle()}">title</a>
 <br/>
-<a th:text="'Автор: ' + ${bookWithReader.getAuthor()}">author</a>
+<a th:text="'Автор: ' + ${book.getAuthor()}">author</a>
 <br/>
-<a th:text="'Год печати: ' + ${bookWithReader.getYear()}">year</a>
+<a th:text="'Год печати: ' + ${book.getYear()}">year</a>
 <br/>
-<a th:href="@{/books/{id}/edit(id=${bookWithReader.getId()})}">Редактировать данные книги</a>
-<br/>
+<hr/>
+<form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getId()})}">
+    <input type="submit" value="Редактировать"/>
+</form><br/>
+<form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
+    <input type="submit" value="Удалить книгу"/>
+</form>
 
-<a th:unless="${bookWithReader.getFullName() == null}" th:text="'Читатель: ' +
-${bookWithReader.getFullName()}">reader</a>
+
+<hr/>
+
+<a th:unless="${owner == null}" th:text="'Читатель: ' +
+${owner.getFullName()}">reader</a>
 <br/>
-<form th:method="PATCH" th:action="@{/books/{id}/free(id=${bookWithReader.getId()})}">
+<form th:unless="${owner == null}" th:method="PATCH" th:action="@{/books/{id}/free(id=${book.getId()})}">
     <input type="submit" value="Освободить книгу"/>
 </form>
-<a th:if="${bookWithReader.getFullName()==null}">
+<a th:if="${owner==null}">
     <a>Книга сейчас свободна</a>
     <br/>
-    <a>Выдать пользователю:</a>
-    <form th:method="PATCH" th:action="@{/books/{id}/give(id=${bookWithReader.getId()})}" th:object="${bookWithReader}">
-        <select th:field="*{fullName}">
-            <option th:each="reader : ${readers}" th:value="${reader.fullName}" th:text="${reader.fullName}">
+    <a>Выдать пользователю книгу:</a>
+    <form th:method="PATCH" th:action="@{/books/{id}/give(id=${book.getId()})}">
+        <label for="reader">Выберите человека</label>
+        <select th:object="${reader}" th:field="*{id}" id="reader">
+            <option th:each="reader : ${readers}" th:value="${reader.getId()}" th:text="${reader.getFullName()}">
             </option>
         </select>
-        <input type="submit" value="Выдать книгу"/>
+        <input type="submit" value="Назначить книгу"/>
     </form>
 </a>
 

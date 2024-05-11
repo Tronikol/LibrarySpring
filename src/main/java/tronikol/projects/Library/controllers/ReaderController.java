@@ -76,7 +76,17 @@ public class ReaderController {
         }
         readerDAO.update(id, reader);
         return "redirect:/readers";
-
+    }
+    // Удаление читателя
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id, BindingResult bindingResult) {
+        try {
+            readerDAO.delete(id);
+        } catch(RuntimeException e){
+            bindingResult.rejectValue("reader", "", "Пользователь не может быть удален, он не вернул книги!");
+            return "/readers/show";
+        }
+        return "redirect:/readers";
     }
 
 

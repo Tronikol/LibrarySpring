@@ -6,15 +6,15 @@
 </head>
 <body>
 <form th:method="PATCH" th:action="@{/books/{id}(id=${book.getId()})}" th:object="${book}">
-    <label for="title">Enter name: </label>
+    <label for="title">Введите название: </label>
     <input type="text" th:field="*{title}" id="title"/>
     <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">title error</div>
     <br/>
-    <label for="author">Enter age: </label>
+    <label for="author">Введите автора: </label>
     <input type="text" th:field="*{author}" id="author"/>
     <div style="color:red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">author error</div>
     <br/>
-    <label for="year">Enter email: </label>
+    <label for="year">Введите год: </label>
     <input type="text" th:field="*{year}" id="year"/>
     <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">year error</div>
     <br/>
