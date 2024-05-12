@@ -11,8 +11,6 @@ import tronikol.projects.Library.dao.ReaderDAO;
 import tronikol.projects.Library.models.Reader;
 import tronikol.projects.Library.util.ReaderValidator;
 
-import java.time.Period;
-
 @Controller
 @RequestMapping("/readers")
 public class ReaderController {
@@ -75,17 +73,12 @@ public class ReaderController {
             return "readers/edit";
         }
         readerDAO.update(id, reader);
-        return "redirect:/readers";
+        return "redirect:/readers/" + id;
     }
     // Удаление читателя
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id, BindingResult bindingResult) {
-        try {
-            readerDAO.delete(id);
-        } catch(RuntimeException e){
-            bindingResult.rejectValue("reader", "", "Пользователь не может быть удален, он не вернул книги!");
-            return "/readers/show";
-        }
+    public String delete(@PathVariable("id") int id) {
+        readerDAO.delete(id);
         return "redirect:/readers";
     }
 

@@ -10,7 +10,7 @@
     <input type="text" th:field="*{fullName}" id="fullName"/>
     <div style="color:red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">name error</div>
     <br/>
-    <label for="burthYear">Enter age: </label>
+    <label for="burthYear">Введите год рождения: </label>
     <input type="text" th:field="*{burthYear}" id="burthYear"/>
     <div style="color:red" th:if="${#fields.hasErrors('burthYear')}" th:errors="*{burthYear}">author error</div>
     <br/>
