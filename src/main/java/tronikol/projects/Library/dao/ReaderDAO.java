@@ -25,8 +25,8 @@ public class ReaderDAO {
 
 
     public void safe(Reader reader) {
-        jdbcTemplate.update("INSERT INTO reader(fullname, burthyear) values (?, ?)",
-                reader.getFullName(), reader.getBurthYear());
+        jdbcTemplate.update("INSERT INTO reader(full_name, birth_year) values (?, ?)",
+                reader.getFullName(), reader.getBirthYear());
     }
 
     public Reader get(int id) {
@@ -34,14 +34,14 @@ public class ReaderDAO {
                 new BeanPropertyRowMapper<>(Reader.class), id).stream().findAny().orElse(null);
     }
     public Reader get(String fullName){
-        return jdbcTemplate.query("Select * from reader where fullname = ?",
+        return jdbcTemplate.query("Select * from reader where full_name = ?",
                 new BeanPropertyRowMapper<>(Reader.class), fullName).stream().findAny().orElse(null);
 
     }
 
     public void update(int id, Reader reader) {
-        jdbcTemplate.update("UPDATE reader set fullname = ?, burthyear = ? where id = ?",
-                reader.getFullName(), reader.getBurthYear(), id);
+        jdbcTemplate.update("UPDATE reader set full_name = ?, birth_year= ? where id = ?",
+                reader.getFullName(), reader.getBirthYear(), id);
     }
 
     public void delete(int id) {

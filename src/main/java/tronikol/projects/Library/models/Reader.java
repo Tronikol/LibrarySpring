@@ -13,7 +13,7 @@ public class Reader {
     @Pattern(regexp="[А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+", message = "Имя должно быть в формате: Фамилия Имя Отчество")
     private String fullName;
     @Min(value = 1900, message = "Читатель родился позже 1900 года")
-    private int burthYear;
+    private int birthYear;
 
     public int getId() {
         return id;
@@ -31,18 +31,18 @@ public class Reader {
         this.fullName = fullName;
     }
 
-    public int getBurthYear() {
-        return burthYear;
+    public int getBirthYear() {
+        return birthYear;
     }
 
-    public void setBurthYear(int burthYear) {
-        this.burthYear = burthYear;
+    public void setBirthYear(int birthYear) {
+        this.birthYear = birthYear;
     }
     public Reader() {};
     public Reader(int id, String name, int yearOfBirth) {
         this.id = id;
         this.fullName = name;
-        this.burthYear = yearOfBirth;
+        this.birthYear = yearOfBirth;
     }
 
 }

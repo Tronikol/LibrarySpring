@@ -6,13 +6,13 @@
 </head>
 <body>
 <form th:method="PATCH" th:action="@{/readers/{id}(id=${reader.getId()})}" th:object="${reader}">
-    <label for="fullName">Enter name: </label>
+    <label for="fullName">Введите имя: </label>
     <input type="text" th:field="*{fullName}" id="fullName"/>
     <div style="color:red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">name error</div>
     <br/>
-    <label for="burthYear">Введите год рождения: </label>
-    <input type="text" th:field="*{burthYear}" id="burthYear"/>
-    <div style="color:red" th:if="${#fields.hasErrors('burthYear')}" th:errors="*{burthYear}">author error</div>
+    <label for="birthYear">Введите год рождения: </label>
+    <input type="text" th:field="*{birthYear}" id="birthYear"/>
+    <div style="color:red" th:if="${#fields.hasErrors('birthYear')}" th:errors="*{birthYear}">birth year error</div>
     <br/>
     <input type="submit" value="Update!"/>
 </form>
