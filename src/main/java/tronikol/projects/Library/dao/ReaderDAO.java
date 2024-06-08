@@ -47,4 +47,6 @@ public class ReaderDAO {
     public void delete(int id) {
         jdbcTemplate.update("DELETE FROM reader where id = ?", id);
     }
+
+
 }

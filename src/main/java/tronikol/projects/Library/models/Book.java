@@ -1,23 +1,36 @@
 package tronikol.projects.Library.models;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-
+@Entity
+@Table(name="book")
 public class Book {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "title")
     @Size(min=3, message = "Название должно быть больше 3 знаков")
     private String title;
+    @Column(name = "author")
     @NotEmpty(message="Поле автора не должно быть пустым")
     @Pattern(regexp="[А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+", message = "Имя автора должно быть в формате: Фамилия Имя Отчество")
     private String author;
+    @Column(name = "year")
     private int year;
 
-    public Book(int id, String title, String author, int personId, int year) {
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    private Reader reader;
+
+    public Book(int id, String title, String author, int personId, int year, Reader reader) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.year = year;
+        this.reader = reader;
     }
 
     public int getId() {
@@ -30,7 +43,9 @@ public class Book {
 
 
 
-    public Book() {}
+    public Book() {
+
+    }
     
 
     public String getTitle() {
@@ -55,5 +70,13 @@ public class Book {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public Reader getReader() {
+        return reader;
+    }
+
+    public void setReader(Reader reader) {
+        this.reader = reader;
     }
 }
