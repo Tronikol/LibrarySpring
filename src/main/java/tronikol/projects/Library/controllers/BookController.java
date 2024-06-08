@@ -28,8 +28,14 @@ public class BookController {
     }
 
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("books", bookService.findAll());
+    public String index(@RequestParam(value = "page", required = false) Integer page,
+                        @RequestParam(value = "books_per_page", required = false) Integer booksPerPage,
+                        @RequestParam(value = "sort_by_year", required = false) boolean sortByYear, Model model) {
+        if (page == null || booksPerPage == null) {
+            model.addAttribute("books", bookService.findAll(sortByYear));
+        } else {
+            model.addAttribute("books", bookService.findWithPagination(page, booksPerPage, sortByYear));
+        }
         return "books/index";
     }
 
@@ -43,7 +49,7 @@ public class BookController {
     @PostMapping()
     public String create(@Valid Book book, BindingResult bindingResult) {
         bookValidator.validate(book, bindingResult);
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "books/new";
         }
         bookService.add(book);
@@ -62,36 +68,40 @@ public class BookController {
 
     // Страница изменения книги
     @GetMapping("/{id}/edit")
-    public String edit(@PathVariable("id") int id, Model model){
+    public String edit(@PathVariable("id") int id, Model model) {
         model.addAttribute("book", bookService.findById(id));
         return "books/edit";
     }
+
     // Изменение книги
     @PatchMapping("/{id}")
     public String update(@PathVariable("id") int id, @ModelAttribute("book") @Valid Book book,
-                         BindingResult bindingResult){
+                         BindingResult bindingResult) {
         bookValidator.validate(book, bindingResult);
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "books/edit";
         }
         bookService.update(id, book);
-        return "redirect:/books/"+id;
+        return "redirect:/books/" + id;
     }
+
     // Выдача книги читателю
     @PatchMapping("{id}/give")
     public String give(@PathVariable("id") int id, @ModelAttribute("reader") Reader reader) {
         bookService.giveBook(id, reader);
         return "redirect:/books/" + id;
     }
+
     // Возврат книги в библиотеку
     @PatchMapping("{id}/free")
     public String free(@PathVariable("id") int id) {
         bookService.free(id);
         return "redirect:/books/" + id;
     }
+
     // Удаление книги
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id){
+    public String delete(@PathVariable("id") int id) {
         bookService.delete(id);
         return "redirect:/books";
     }

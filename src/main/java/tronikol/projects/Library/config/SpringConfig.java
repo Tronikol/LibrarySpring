@@ -38,7 +38,6 @@ public class SpringConfig implements WebMvcConfigurer {
     private final ApplicationContext applicationContext;
     private final Environment environment;
 
-
     @Autowired
     public SpringConfig(ApplicationContext applicationContext, Environment environment, Environment environment1) {
         this.applicationContext = applicationContext;
@@ -54,10 +53,7 @@ public class SpringConfig implements WebMvcConfigurer {
         dataSource.setPassword(environment.getProperty("password"));
         return dataSource;
     }
-    @Bean
-    public JdbcTemplate jdbcTemplate() {
-        return new JdbcTemplate(dataSource());
-    }
+
 //-------------------
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
@@ -111,7 +107,5 @@ public class SpringConfig implements WebMvcConfigurer {
 
         return em;
     }
-
-
 
 }

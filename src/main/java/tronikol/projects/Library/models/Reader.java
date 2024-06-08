@@ -27,7 +27,7 @@ public class Reader {
     @Column(name = "birth_year")
     private int birthYear;
 
-    @OneToMany( mappedBy = "reader", fetch = FetchType.EAGER)
+    @OneToMany( mappedBy = "reader")
     private List<Book> books;
 
     public void giveBook(Book book) {

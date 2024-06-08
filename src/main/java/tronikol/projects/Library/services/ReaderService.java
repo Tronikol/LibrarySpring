@@ -1,5 +1,6 @@
 package tronikol.projects.Library.services;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +38,7 @@ public class ReaderService {
     @Transactional
     public List<Book> findReaderBooks(int id) {
         Reader reader = readerRepo.findById(id).orElse(null);
+        Hibernate.initialize(reader.getBooks());
         return reader.getBooks();
     }
     @Transactional
