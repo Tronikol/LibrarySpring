@@ -6,8 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import tronikol.projects.Library.dao.BookDAO;
-import tronikol.projects.Library.dao.ReaderDAO;
 import tronikol.projects.Library.models.Book;
 import tronikol.projects.Library.models.Reader;
 import tronikol.projects.Library.services.BookService;
@@ -23,8 +21,7 @@ public class BookController {
     private final ReaderService readerService;
 
     @Autowired
-    public BookController(BookDAO bookDAO, ReaderDAO readerDAO, BookValidator bookValidator, BookService bookService, ReaderService readerService) {
-
+    public BookController(BookValidator bookValidator, BookService bookService, ReaderService readerService) {
         this.bookValidator = bookValidator;
         this.bookService = bookService;
         this.readerService = readerService;

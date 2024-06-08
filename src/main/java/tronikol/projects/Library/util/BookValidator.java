@@ -5,15 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import tronikol.projects.Library.dao.BookDAO;
 import tronikol.projects.Library.models.Book;
+import tronikol.projects.Library.services.BookService;
+
 @Component
 public class BookValidator implements Validator {
 
-    private final BookDAO bookDao;
+    private final BookService bookService;
     @Autowired
-    public BookValidator(BookDAO bookDao) {
-        this.bookDao = bookDao;
+    public BookValidator(BookService bookService) {
+        this.bookService = bookService;
     }
 
     @Override
@@ -25,7 +26,7 @@ public class BookValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Book book = (Book) target;
         // Strange equals correct this
-        if(bookDao.get(book.getTitle())!=null && bookDao.get(book.getTitle()).getId()!=((Book) target).getId()) {
+        if(bookService.findByTitle(book.getTitle())!=null && bookService.findByTitle(book.getTitle()).getId()!=((Book) target).getId()) {
             errors.rejectValue("title", "", "Такая книга уже зарегистрирована");
         }
 

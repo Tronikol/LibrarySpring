@@ -6,29 +6,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import tronikol.projects.Library.dao.BookDAO;
-import tronikol.projects.Library.dao.ReaderDAO;
 import tronikol.projects.Library.models.Reader;
+import tronikol.projects.Library.services.ReaderService;
 import tronikol.projects.Library.util.ReaderValidator;
 
 @Controller
 @RequestMapping("/readers")
 public class ReaderController {
-    private final ReaderDAO readerDAO;
-    private final BookDAO bookDAO;
     private final ReaderValidator readerValidator;
+    private final ReaderService readerService;
 
     @Autowired
-    public ReaderController(ReaderDAO readerDAO, BookDAO bookDAO, ReaderValidator readerValidator) {
-        this.readerDAO = readerDAO;
-        this.bookDAO = bookDAO;
+    public ReaderController(ReaderValidator readerValidator, ReaderService readerService) {
         this.readerValidator = readerValidator;
+        this.readerService = readerService;
     }
 
     // показ всех читателей
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("readers", readerDAO.index());
+        model.addAttribute("readers", readerService.findAll());
         return "readers/index";
     }
     // Страница создания нового читателя
@@ -47,21 +44,21 @@ public class ReaderController {
         if(bindingResult.hasErrors()) {
             return "readers/new";
         }
-        readerDAO.safe(reader);
+        readerService.safe(reader);
         return "redirect:/readers";
     }
 
-    // Страница с информацией о читателе, реализация без dto, кажется так проще
+    // Страница с информацией о читателе
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("reader", readerDAO.get(id));
-        model.addAttribute("books", bookDAO.getByPersonId(id));
+        model.addAttribute("reader", readerService.findById(id));
+        model.addAttribute("books", readerService.findReaderBooks(id));
         return "readers/show";
     }
     // Страница редактирования
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model){
-        model.addAttribute("reader", readerDAO.get(id));
+        model.addAttribute("reader", readerService.findById(id));
         return "readers/edit";
     }
     //  Изменение читателя
@@ -72,13 +69,13 @@ public class ReaderController {
         if(bindingResult.hasErrors()) {
             return "readers/edit";
         }
-        readerDAO.update(id, reader);
+        readerService.update(id, reader);
         return "redirect:/readers/" + id;
     }
     // Удаление читателя
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        readerDAO.delete(id);
+        readerService.delete(id);
         return "redirect:/readers";
     }
 

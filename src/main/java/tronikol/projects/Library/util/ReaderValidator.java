@@ -4,14 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import tronikol.projects.Library.dao.ReaderDAO;
 import tronikol.projects.Library.models.Reader;
+import tronikol.projects.Library.services.ReaderService;
+
 @Component
 public class ReaderValidator implements Validator {
-    private final ReaderDAO readerDAO;
+    private final ReaderService readerService;
     @Autowired
-    public ReaderValidator(ReaderDAO readerDAO) {
-        this.readerDAO = readerDAO;
+    public ReaderValidator(ReaderService readerService) {
+        this.readerService = readerService;
     }
 
     @Override
@@ -23,7 +24,7 @@ public class ReaderValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Reader reader = (Reader) target;
         // maybe i can correct this?
-        if(readerDAO.get(reader.getFullName())!=null && readerDAO.get(reader.getFullName()).getId()!=((Reader) target).getId()) {
+        if(readerService.findByFullName(reader.getFullName())!=null && readerService.findByFullName(reader.getFullName()).getId()!=((Reader) target).getId()) {
             errors.rejectValue("fullName", "", "Пользователь с таким именем уже существует");
         }
     }

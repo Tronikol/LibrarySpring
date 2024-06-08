@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 import tronikol.projects.Library.models.Reader;
 @Repository
 public interface ReaderRepo extends JpaRepository<Reader, Integer> {
+    Reader findByFullName(String fullName);
 }

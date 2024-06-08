@@ -55,13 +55,17 @@ public class BookService {
         bookRepo.save(book);
 
     }
-
+    @Transactional
     public void free(int id) {
         Book book = bookRepo.findById(id).orElse(null);
         book.setReader(null);
     }
-
+    @Transactional
     public void delete(int id) {
         bookRepo.deleteById(id);
+    }
+
+    public Book findByTitle(String title) {
+        return bookRepo.findByTitle(title);
     }
 }

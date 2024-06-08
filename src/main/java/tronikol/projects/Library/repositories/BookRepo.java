@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 import tronikol.projects.Library.models.Book;
 @Repository
 public interface BookRepo extends JpaRepository<Book, Integer> {
+    public Book findByTitle(String title);
 }
