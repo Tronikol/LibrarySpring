@@ -9,6 +9,7 @@ import tronikol.projects.Library.models.Reader;
 import tronikol.projects.Library.repositories.BookRepo;
 import tronikol.projects.Library.repositories.ReaderRepo;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -39,6 +40,18 @@ public class ReaderService {
     public List<Book> findReaderBooks(int id) {
         Reader reader = readerRepo.findById(id).orElse(null);
         Hibernate.initialize(reader.getBooks());
+        List<Book> books = reader.getBooks();
+        Date today = new Date();
+        long oneDay = 1000 * 60 * 60 * 24;
+        for(Book book : books) {
+            long delta = (today.getTime() - book.getDateOfIssue().getTime()) / oneDay;
+            if (delta > 10) {
+                book.setOverdue(true);
+            } else {
+                book.setOverdue(false);
+            }
+
+        }
         return reader.getBooks();
     }
     @Transactional

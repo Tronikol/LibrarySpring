@@ -8,5 +8,6 @@ CREATE TABLE book(
     title varchar(100) not null,
     author varchar(100) not null,
     year int not null,
-    person_id int REFERENCES reader(id) on DELETE set null
+    person_id int REFERENCES reader(id) on DELETE set null,
+    date_of_issue timestamp
 )

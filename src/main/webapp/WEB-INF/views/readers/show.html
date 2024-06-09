@@ -23,10 +23,10 @@
 <a th:unless="${books.isEmpty()}">
     <a>Книги читателя: </a>
     <br/>
-    <a th:each="book : ${books}">
-        <a th:text="'Название: ' + ${book.getTitle()}">title</a>
-        <a th:text="' Автор: ' + ${book.getAuthor()}">author</a>
-        <a th:text="' Год печати: ' + ${book.getYear()}">year</a>
+    <a th:each="book : ${books}" th:style="${book.overdue} ? 'color: red;' : ''">
+        <span th:text="'Название: ' + ${book.title}">title</span>
+        <span th:text="' Автор: ' + ${book.author}">author</span>
+        <span th:text="' Год печати: ' + ${book.year}">year</span>
         <br/>
     </a>
 </a>

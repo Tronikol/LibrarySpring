@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
 @Entity
 @Table(name="book")
 public class Book {
@@ -20,6 +24,12 @@ public class Book {
     private String author;
     @Column(name = "year")
     private int year;
+    @Transient
+    private Boolean isOverdue;
+    @Column(name="date_of_issue")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateOfIssue;
+
 
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
@@ -78,5 +88,21 @@ public class Book {
 
     public void setReader(Reader reader) {
         this.reader = reader;
+    }
+
+    public Boolean getOverdue() {
+        return isOverdue;
+    }
+
+    public void setOverdue(Boolean overdue) {
+        isOverdue = overdue;
+    }
+
+    public Date getDateOfIssue() {
+        return dateOfIssue;
+    }
+
+    public void setDateOfIssue(Date dateOfIssue) {
+        this.dateOfIssue = dateOfIssue;
     }
 }

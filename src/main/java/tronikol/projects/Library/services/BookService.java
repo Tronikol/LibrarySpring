@@ -10,6 +10,7 @@ import tronikol.projects.Library.models.Reader;
 import tronikol.projects.Library.repositories.BookRepo;
 import tronikol.projects.Library.repositories.ReaderRepo;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -57,6 +58,7 @@ public class BookService {
     public void giveBook(int id, Reader reader) {
         Book book = bookRepo.findById(id).orElse(null);
         book.setReader(reader);
+        book.setDateOfIssue(new Date());
         bookRepo.save(book);
 
     }
