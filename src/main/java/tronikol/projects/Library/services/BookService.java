@@ -10,7 +10,6 @@ import tronikol.projects.Library.models.Reader;
 import tronikol.projects.Library.repositories.BookRepo;
 import tronikol.projects.Library.repositories.ReaderRepo;
 
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -89,5 +88,9 @@ public class BookService {
             return bookRepo.findAll(PageRequest.of(page, booksPerPage, Sort.by("year"))).getContent();
         else
             return bookRepo.findAll(PageRequest.of(page, booksPerPage)).getContent();
+    }
+
+    public List<Book> findByTitleLike(String searchRequest) {
+        return bookRepo.findByTitleContains(searchRequest);
     }
 }

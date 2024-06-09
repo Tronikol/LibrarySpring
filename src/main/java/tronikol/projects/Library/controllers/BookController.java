@@ -105,6 +105,12 @@ public class BookController {
         bookService.delete(id);
         return "redirect:/books";
     }
+    // Поиск книr
+    @GetMapping("/search")
+    public String search(@RequestParam(value = "search_title", required = false) String searchTitle, Model model){
+        model.addAttribute("books", bookService.findByTitleLike(searchTitle));
+        return "books/search";
+    }
 
 
 }
